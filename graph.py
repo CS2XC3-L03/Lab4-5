@@ -184,8 +184,6 @@ def is_connected(G):
 def create_random_graph(i, j):
     graph = Graph(i)
     created_edges = set()
-    if j > i * (i - 1) / 2:
-        j = i * (i - 1) / 2
     for _ in range(j):
         node1 = random.randint(0, i - 1)
         node2 = random.randint(0, i - 1)
