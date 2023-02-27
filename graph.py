@@ -183,17 +183,19 @@ def has_cycle_helper(G, node, visited, parent):
 
 def create_random_graph(i, j):
     graph = Graph(i)
+    created_edges = set()
     for _ in range(j):
         node1 = random.randint(0, i - 1)
         node2 = random.randint(0, i - 1)
+        while ((node1, node2) in created_edges) or ((node2, node1) in created_edges):
+            node1 = random.randint(0, i - 1)
+            node2 = random.randint(0, i - 1)
+        created_edges.add((node1, node2))
+        created_edges.add((node2, node1))
         graph.add_edge(node1, node2)
     return graph
 
 
-graph = Graph(3)
-graph.add_edge(0, 0)
-print(is_connected(graph))  # False
-graph.add_edge(0, 1)
-print(is_connected(graph))  # False
-graph.add_edge(1, 2)
-print(is_connected(graph))  # True , b/c 0,1,2 are all connected
+graph = create_random_graph(5, 5)
+
+print(graph.adj)
