@@ -124,28 +124,28 @@ def DFS2(G, node1, node2):
     return []
 
 
-# def BFS3(graph, node1):
-#     visited, Q, pred = {node1}, deque([node1]), {node1: None}
-#     while Q:
-#         current_node = Q.popleft()
-#         for neighbour in graph.adj[current_node]:
-#             if neighbour not in visited:
-#                 visited.add(neighbour)
-#                 Q.append(neighbour)
-#                 pred[neighbour] = current_node
-#     return pred
+def BFS3(graph, node1):
+    visited, Q, pred = {node1}, deque([node1]), {}
+    while Q:
+        current_node = Q.popleft()
+        for neighbour in graph.adj[current_node]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                Q.append(neighbour)
+                pred[neighbour] = current_node
+    return pred
 
 
-# def DFS3(graph, node1):
-#     visited, S, pred = {node1}, [node1], {node1: None}
-#     while S:
-#         current_node = S.pop()
-#         for neighbour in graph.adj[current_node]:
-#             if neighbour not in visited:
-#                 visited.add(neighbour)
-#                 S.append(neighbour)
-#                 pred[neighbour] = current_node
-#     return pred
+def DFS3(graph, node1):
+    visited, S, pred = {node1}, [node1], {}
+    while S:
+        current_node = S.pop()
+        for neighbour in graph.adj[current_node]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                S.append(neighbour)
+                pred[neighbour] = current_node
+    return pred
 
 
 def has_cycle(G):
@@ -212,3 +212,15 @@ graph2.add_edge(0, 1)
 print(is_connected(graph2)) # False 0, 1 but not 2
 graph2.add_edge(1, 2)
 print(is_connected(graph2)) # True 0, 1, 2
+
+graph3 = Graph(5)
+graph3.add_edge(0, 1)
+graph3.add_edge(1, 2)
+graph3.add_edge(2, 3)
+graph3.add_edge(3, 4)
+graph3.add_edge(4, 0)
+
+
+print(DFS3(graph3, 0))
+
+print(BFS3(graph3, 0))
