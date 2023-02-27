@@ -3,8 +3,6 @@ from graph import create_random_graph, is_connected
 
 """
 Experiment 2: Determine the probability that a random graph with n nodes and j edges is connected.
-
-We will do this by creating a random graph with 100 nodes and edges from 1 to the maximum number of edges possible. We will then run the is_connected function 20 times for each edge count and plot the results.
 """
 
 
