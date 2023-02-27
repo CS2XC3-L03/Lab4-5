@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plot
 import graph
-import approxfunc
+import approx_func
 
 def ept3_test(node_num, graphs_num):
     mvc_list, approx1_list, approx2_list, approx3_list = [], [], [], []
@@ -10,9 +10,9 @@ def ept3_test(node_num, graphs_num):
         for _ in range(graphs_num):
             gp = graph.create_random_graph(node_num, edge_num)
             mvc_sum     += len(graph.MVC(gp))
-            approx1_sum += len(approxfunc.approx1(gp))
-            approx2_sum += len(approxfunc.approx2(gp))
-            approx3_sum += len(approxfunc.approx3(gp))
+            approx1_sum += len(approx_func.approx1(gp))
+            approx2_sum += len(approx_func.approx2(gp))
+            approx3_sum += len(approx_func.approx3(gp))
         
         mvc_list.append(mvc_sum / graphs_num)
         approx1_list.append(approx1_sum / graphs_num)
