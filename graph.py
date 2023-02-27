@@ -208,25 +208,26 @@ def graph_copy(G):
             graph_cp.add_edge(n1, n2)
     return graph_cp 
 
-graph = create_random_graph(5, 5)
+# ----------------------- TESTS -----------------------
+# graph = create_random_graph(5, 5)
 
-print(graph.adj)
+# print(graph.adj)
 
-graph2 = Graph(3)
-graph2.add_edge(0, 1)
+# graph2 = Graph(3)
+# graph2.add_edge(0, 1)
 
-print(is_connected(graph2)) # False 0, 1 but not 2
-graph2.add_edge(1, 2)
-print(is_connected(graph2)) # True 0, 1, 2
+# print(is_connected(graph2)) # False 0, 1 but not 2
+# graph2.add_edge(1, 2)
+# print(is_connected(graph2)) # True 0, 1, 2
 
-graph3 = Graph(5)
-graph3.add_edge(0, 1)
-graph3.add_edge(1, 2)
-graph3.add_edge(2, 3)
-graph3.add_edge(3, 4)
-graph3.add_edge(4, 0)
+# graph3 = Graph(5)
+# graph3.add_edge(0, 1)
+# graph3.add_edge(1, 2)
+# graph3.add_edge(2, 3)
+# graph3.add_edge(3, 4)
+# graph3.add_edge(4, 0)
 
 
-print(DFS3(graph3, 0))
+# print(DFS3(graph3, 0))
 
-print(BFS3(graph3, 0))
+# print(BFS3(graph3, 0))
