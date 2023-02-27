@@ -1,8 +1,8 @@
+import random
 from collections import deque
 
-#Undirected graph using an adjacency list
+# Undirected graph using an adjacency list
 class Graph:
-
     def __init__(self, n):
         self.adj = {}
         for i in range(n):
@@ -26,10 +26,10 @@ class Graph:
         return len()
 
 
-#Breadth First Search
+# Breadth First Search
 def BFS(G, node1, node2):
     Q = deque([node1])
-    marked = {node1 : True}
+    marked = {node1: True}
     for node in G.adj:
         if node != node1:
             marked[node] = False
@@ -44,7 +44,7 @@ def BFS(G, node1, node2):
     return False
 
 
-#Depth First Search
+# Depth First Search
 def DFS(G, node1, node2):
     S = [node1]
     marked = {}
@@ -60,7 +60,9 @@ def DFS(G, node1, node2):
                 S.append(node)
     return False
 
-#Use the methods below to determine minimum vertex covers
+
+# Use the methods below to determine minimum vertex covers
+
 
 def add_to_each(sets, element):
     copy = sets.copy()
@@ -68,17 +70,20 @@ def add_to_each(sets, element):
         set.append(element)
     return copy
 
+
 def power_set(set):
     if set == []:
         return [[]]
     return power_set(set[1:]) + add_to_each(power_set(set[1:]), set[0])
 
+
 def is_vertex_cover(G, C):
     for start in G.adj:
         for end in G.adj[start]:
-            if not(start in C or end in C):
+            if not (start in C or end in C):
                 return False
     return True
+
 
 def MVC(G):
     nodes = [i for i in range(G.get_size())]
@@ -91,3 +96,105 @@ def MVC(G):
     return min_cover
 
 
+def BFS2(G, node1, node2):
+    Q, visited = deque([(node1, [node1])]), set()
+    while Q:
+        (vertex, path) = Q.popleft()
+        if vertex in visited:
+            continue
+        if vertex == node2:
+            return path
+        visited.add(vertex)
+        for neighbour in G.adj[vertex]:
+            Q.append((neighbour, [*path, neighbour]))
+    return []
+
+
+def DFS2(G, node1, node2):
+    S, visited = [(node1, [node1])], set()
+    while S:
+        (vertex, path) = S.pop()
+        if vertex in visited:
+            continue
+        if vertex == node2:
+            return path
+        visited.add(vertex)
+        for neighbour in G.adj[vertex]:
+            S.append((neighbour, [*path, neighbour]))
+    return []
+
+
+# def BFS3(graph, node1):
+#     visited, Q, pred = {node1}, deque([node1]), {node1: None}
+#     while Q:
+#         current_node = Q.popleft()
+#         for neighbour in graph.adj[current_node]:
+#             if neighbour not in visited:
+#                 visited.add(neighbour)
+#                 Q.append(neighbour)
+#                 pred[neighbour] = current_node
+#     return pred
+
+
+# def DFS3(graph, node1):
+#     visited, S, pred = {node1}, [node1], {node1: None}
+#     while S:
+#         current_node = S.pop()
+#         for neighbour in graph.adj[current_node]:
+#             if neighbour not in visited:
+#                 visited.add(neighbour)
+#                 S.append(neighbour)
+#                 pred[neighbour] = current_node
+#     return pred
+
+
+def has_cycle(G):
+    visited = set()
+    for node in G.adj:
+        if node not in visited and has_cycle_helper(G, node, visited, None):
+            return True
+    return False
+
+
+def has_cycle_helper(G, node, visited, parent):
+    visited.add(node)
+    for neighbour in G.adj[node]:
+        if neighbour not in visited:
+            has_cycle_helper(G, neighbour, visited, node)
+        elif parent and (neighbour != parent):
+            return True
+    return False
+
+
+def is_connected(G):
+    # If the graph is empty, it is connected
+    if not G.adj:
+        return True
+    S = [0]
+    visited = {0}
+    while S:
+        current_node = S.pop()
+        for neighbour in G.adj[current_node]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                S.append(neighbour)
+    return len(visited) == len(G.adj)
+
+
+def create_random_graph(i, j):
+    graph = Graph(i)
+    for _ in range(j):
+        node1 = random.randint(0, i - 1)
+        node2 = random.randint(0, i - 1)
+        graph.add_edge(node1, node2)
+    return graph
+
+
+graph = Graph(3)
+graph.add_edge(0, 0)
+print(is_connected(graph))  # True (0, 1, 2 are connected)
+print(has_cycle(graph))  # False (no cycles)
+graph2 = Graph(3)
+graph2.add_edge(0, 1)
+
+print(is_connected(graph2))  # False (0, 1 are connected, but 2 is not)
