@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from graph import create_random_graph, has_cycle
 
 """
-Experiment 1: Determine the probability that a random graph with n nodes abd j edges has a cycle.
+Experiment 1: Determine the probability that a random graph with n nodes and j edges has a cycle.
 """
 
 
