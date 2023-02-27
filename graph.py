@@ -151,17 +151,17 @@ def DFS3(graph, node1):
 def has_cycle(G):
     visited = set()
     for node in G.adj:
-        if node not in visited and has_cycle_helper(G, node, visited, None):
+        if node not in visited and has_cycle_helper(G, node, visited):
             return True
     return False
 
 
-def has_cycle_helper(G, node, visited, parent):
+def has_cycle_helper(G, node, visited, parent=None):
     visited.add(node)
     for neighbour in G.adj[node]:
         if neighbour not in visited:
             has_cycle_helper(G, neighbour, visited, node)
-        elif parent and (neighbour != parent):
+        elif neighbour != parent:
             return True
     return False
 
@@ -189,11 +189,13 @@ def create_random_graph(i, j):
     for _ in range(j):
         node1 = random.randint(0, i - 1)
         node2 = random.randint(0, i - 1)
-        while any([
-            (node1, node2) in created_edges,
-            (node2, node1) in created_edges,
-            node1 == node2,
-        ]):
+        while any(
+            [
+                (node1, node2) in created_edges,
+                (node2, node1) in created_edges,
+                node1 == node2,
+            ]
+        ):
             node1 = random.randint(0, i - 1)
             node2 = random.randint(0, i - 1)
         created_edges.add((node1, node2))
@@ -201,12 +203,14 @@ def create_random_graph(i, j):
         graph.add_edge(node1, node2)
     return graph
 
+
 def graph_copy(G):
     graph_cp = Graph(G.number_of_nodes())
     for n1 in G.adj.keys():
         for n2 in G.adjacent_nodes(n1):
             graph_cp.add_edge(n1, n2)
-    return graph_cp 
+    return graph_cp
+
 
 # ----------------------- TESTS -----------------------
 # graph = create_random_graph(5, 5)
@@ -216,9 +220,9 @@ def graph_copy(G):
 # graph2 = Graph(3)
 # graph2.add_edge(0, 1)
 
-# print(is_connected(graph2)) # False 0, 1 but not 2
+# print(is_connected(graph2))  # False 0, 1 but not 2
 # graph2.add_edge(1, 2)
-# print(is_connected(graph2)) # True 0, 1, 2
+# print(is_connected(graph2))  # True 0, 1, 2
 
 # graph3 = Graph(5)
 # graph3.add_edge(0, 1)
@@ -227,7 +231,4 @@ def graph_copy(G):
 # graph3.add_edge(3, 4)
 # graph3.add_edge(4, 0)
 
-
-# print(DFS3(graph3, 0))
-
-# print(BFS3(graph3, 0))
+# print(has_cycle(graph3))  # True
