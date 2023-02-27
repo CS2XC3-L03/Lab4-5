@@ -23,9 +23,9 @@ def main():
                 count += 1
         probabilities.append(count / NUM_OF_RUNS)
     plt.plot(edge_counts, probabilities)
-    plt.xlabel("Number of edges")
+    plt.xlabel("Number of edges (j)")
     plt.ylabel("Probability of connectedness")
-    plt.title("Probability of connectedness in random graph")
+    plt.title("Probability of connectedness in random graph with 100 nodes and j edges")
     plt.show()
 
 

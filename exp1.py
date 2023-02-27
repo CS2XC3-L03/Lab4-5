@@ -24,9 +24,9 @@ def main():
         probabilities.append(count / NUM_OF_RUNS)
     plt.plot(edge_counts, probabilities)
     plt.plot(edge_counts, probabilities)
-    plt.xlabel("Number of edges")
+    plt.xlabel("Number of edges (j)")
     plt.ylabel("Probability of cycle")
-    plt.title("Probability of cycle in random graph")
+    plt.title("Probability of cycle in random graph with 100 nodes and j edges")
     plt.show()
 
 
