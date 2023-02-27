@@ -166,28 +166,34 @@ def has_cycle_helper(G, node, visited, parent):
     return False
 
 
-# def is_connected(G):
-#     # If the graph is empty, it is connected
-#     if not G.adj:
-#         return True
-#     first_node = list(G.adj.keys())[0]
-#     S, visited = [first_node], {first_node}
-#     while S:
-#         current_node = S.pop()
-#         for neighbour in G.adj[current_node]:
-#             if neighbour not in visited:
-#                 visited.add(neighbour)
-#                 S.append(neighbour)
-#     return len(visited) == len(G.adj)
+def is_connected(G):
+    # If the graph is empty, it is connected
+    if not G.adj:
+        return True
+    first_node = list(G.adj.keys())[0]
+    S, visited = [first_node], {first_node}
+    while S:
+        current_node = S.pop()
+        for neighbour in G.adj[current_node]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                S.append(neighbour)
+    return len(visited) == len(G.adj)
 
 
 def create_random_graph(i, j):
     graph = Graph(i)
     created_edges = set()
+    if j > i * (i - 1) / 2:
+        j = i * (i - 1) / 2
     for _ in range(j):
         node1 = random.randint(0, i - 1)
         node2 = random.randint(0, i - 1)
-        while ((node1, node2) in created_edges) or ((node2, node1) in created_edges):
+        while any([
+            (node1, node2) in created_edges,
+            (node2, node1) in created_edges,
+            node1 == node2,
+        ]):
             node1 = random.randint(0, i - 1)
             node2 = random.randint(0, i - 1)
         created_edges.add((node1, node2))
@@ -199,3 +205,10 @@ def create_random_graph(i, j):
 graph = create_random_graph(5, 5)
 
 print(graph.adj)
+
+graph2 = Graph(3)
+graph2.add_edge(0, 1)
+
+print(is_connected(graph2)) # False 0, 1 but not 2
+graph2.add_edge(1, 2)
+print(is_connected(graph2)) # True 0, 1, 2
