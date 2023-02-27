@@ -166,18 +166,19 @@ def has_cycle_helper(G, node, visited, parent):
     return False
 
 
-def is_connected(G):
-    # If the graph is empty, it is connected
-    if not G.adj: return True
-    first_node = list(G.adj.keys())[0]
-    S, visited = [first_node], {first_node}
-    while S:
-        current_node = S.pop()
-        for neighbour in G.adj[current_node]:
-            if neighbour not in visited:
-                visited.add(neighbour)
-                S.append(neighbour)
-    return len(visited) == len(G.adj)
+# def is_connected(G):
+#     # If the graph is empty, it is connected
+#     if not G.adj:
+#         return True
+#     first_node = list(G.adj.keys())[0]
+#     S, visited = [first_node], {first_node}
+#     while S:
+#         current_node = S.pop()
+#         for neighbour in G.adj[current_node]:
+#             if neighbour not in visited:
+#                 visited.add(neighbour)
+#                 S.append(neighbour)
+#     return len(visited) == len(G.adj)
 
 
 def create_random_graph(i, j):
@@ -195,5 +196,4 @@ print(is_connected(graph))  # False
 graph.add_edge(0, 1)
 print(is_connected(graph))  # False
 graph.add_edge(1, 2)
-print(is_connected(graph))  # True
-
+print(is_connected(graph))  # True , b/c 0,1,2 are all connected
