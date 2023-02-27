@@ -201,6 +201,12 @@ def create_random_graph(i, j):
         graph.add_edge(node1, node2)
     return graph
 
+def graph_copy(G):
+    graph_cp = Graph(G.number_of_nodes())
+    for n1 in G.adj.keys():
+        for n2 in G.adjacent_nodes(n1):
+            graph_cp.add_edge(n1, n2)
+    return graph_cp 
 
 graph = create_random_graph(5, 5)
 
