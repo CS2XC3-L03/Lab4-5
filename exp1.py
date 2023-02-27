@@ -3,8 +3,6 @@ from graph import create_random_graph, has_cycle
 
 """
 Experiment 1: Determine the probability that a random graph with n nodes abd j edges has a cycle.
-
-We will do this by creating a random graph with 100 nodes and edges from 1 to the maximum number of edges possible. We will then run the has_cycle function 20 times for each edge count and plot the results.
 """
 
 
