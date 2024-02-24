@@ -2,7 +2,8 @@ import matplotlib.pyplot as plot
 import graph
 import approx_func
 
-def ept3_test(node_num, graphs_num):
+
+def experiment3(node_num, graphs_num):
     mvc_list, approx1_list, approx2_list, approx3_list = [], [], [], []
     max_edge_num = node_num * (node_num - 1) // 2 # n*(n-1)/2 formula to calc max edges give num of nodes
     for edge_num in range(max_edge_num + 1):
@@ -31,9 +32,12 @@ def ept3_test(node_num, graphs_num):
     plot.title(f"Accuracy Comparisons of 3 Different Algorithms of Vertex Cover Approximations On {node_num} Node Nums")
     plot.show()
 
-print("-------------------------------exp3----------------------------------")
-ept3_test(5, 1000)
 
-ept3_test(7, 1000)
+def main():
+    experiment3(5, 1000)
+    experiment3(7, 1000)
+    experiment3(9, 1000)
 
-ept3_test(9, 1000)
+
+if __name__ == "__main__":
+    main()

@@ -210,25 +210,3 @@ def graph_copy(G):
         for n2 in G.adjacent_nodes(n1):
             graph_cp.add_edge(n1, n2)
     return graph_cp
-
-
-# ----------------------- TESTS -----------------------
-# graph = create_random_graph(5, 5)
-
-# print(graph.adj)
-
-# graph2 = Graph(3)
-# graph2.add_edge(0, 1)
-
-# print(is_connected(graph2))  # False 0, 1 but not 2
-# graph2.add_edge(1, 2)
-# print(is_connected(graph2))  # True 0, 1, 2
-
-# graph3 = Graph(5)
-# graph3.add_edge(0, 1)
-# graph3.add_edge(1, 2)
-# graph3.add_edge(2, 3)
-# graph3.add_edge(3, 4)
-# graph3.add_edge(4, 0)
-
-# print(has_cycle(graph3))  # True

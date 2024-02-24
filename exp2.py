@@ -1,12 +1,11 @@
 import matplotlib.pyplot as plt
 from graph import create_random_graph, is_connected
 
-"""
-Experiment 2: Determine the probability that a random graph with n nodes and j edges is connected.
-"""
-
 
 def main():
+    """
+    Experiment 2: Determine the probability that a random graph with n nodes and j edges is connected.
+    """
     NUM_OF_NODES = 100
     NUM_OF_RUNS = 100
     edge_counts = [1, 5, 10, 25, 50, 75, 100, 250, 500, 750, 1000]
