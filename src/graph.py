@@ -1,8 +1,12 @@
 import random
 from collections import deque
 
-# Undirected graph using an adjacency list
+
 class Graph:
+    """
+    Undirected graph using adjacency list representation
+    """
+
     def __init__(self, n):
         self.adj = {}
         for i in range(n):
@@ -26,38 +30,36 @@ class Graph:
         return len(self.adj)
 
 
-# Breadth First Search
-def BFS(G, node1, node2):
-    Q = deque([node1])
+def bfs(graph, node1, node2):
+    queue = deque([node1])
     marked = {node1: True}
-    for node in G.adj:
+    for node in graph.adj:
         if node != node1:
             marked[node] = False
-    while len(Q) != 0:
-        current_node = Q.popleft()
-        for node in G.adj[current_node]:
+    while len(queue) != 0:
+        current_node = queue.popleft()
+        for node in graph.adj[current_node]:
             if node == node2:
                 return True
             if not marked[node]:
-                Q.append(node)
+                queue.append(node)
                 marked[node] = True
     return False
 
 
-# Depth First Search
-def DFS(G, node1, node2):
-    S = [node1]
+def dfs(graph, node1, node2):
+    stack = [node1]
     marked = {}
-    for node in G.adj:
+    for node in graph.adj:
         marked[node] = False
-    while len(S) != 0:
-        current_node = S.pop()
+    while len(stack) != 0:
+        current_node = stack.pop()
         if not marked[current_node]:
             marked[current_node] = True
-            for node in G.adj[current_node]:
+            for node in graph.adj[current_node]:
                 if node == node2:
                     return True
-                S.append(node)
+                stack.append(node)
     return False
 
 
@@ -77,108 +79,108 @@ def power_set(set):
     return power_set(set[1:]) + add_to_each(power_set(set[1:]), set[0])
 
 
-def is_vertex_cover(G, C):
-    for start in G.adj:
-        for end in G.adj[start]:
-            if not (start in C or end in C):
+def is_vertex_cover(graph, cover_set):
+    for start in graph.adj:
+        for end in graph.adj[start]:
+            if not (start in cover_set or end in cover_set):
                 return False
     return True
 
 
-def MVC(G):
-    nodes = [i for i in range(G.number_of_nodes())]
+def minimum_vertex_cover(graph):
+    nodes = [i for i in range(graph.number_of_nodes())]
     subsets = power_set(nodes)
     min_cover = nodes
     for subset in subsets:
-        if is_vertex_cover(G, subset):
+        if is_vertex_cover(graph, subset):
             if len(subset) < len(min_cover):
                 min_cover = subset
     return min_cover
 
 
-def BFS2(G, node1, node2):
-    Q, visited = deque([(node1, [node1])]), set()
-    while Q:
-        (vertex, path) = Q.popleft()
+def bfs2(graph, node1, node2):
+    queue, visited = deque([(node1, [node1])]), set()
+    while queue:
+        (vertex, path) = queue.popleft()
         if vertex in visited:
             continue
         if vertex == node2:
             return path
         visited.add(vertex)
-        for neighbour in G.adj[vertex]:
-            Q.append((neighbour, [*path, neighbour]))
+        for neighbour in graph.adj[vertex]:
+            queue.append((neighbour, [*path, neighbour]))
     return []
 
 
-def DFS2(G, node1, node2):
-    S, visited = [(node1, [node1])], set()
-    while S:
-        (vertex, path) = S.pop()
+def dfs2(graph, node1, node2):
+    stack, visited = [(node1, [node1])], set()
+    while stack:
+        (vertex, path) = stack.pop()
         if vertex in visited:
             continue
         if vertex == node2:
             return path
         visited.add(vertex)
-        for neighbour in G.adj[vertex]:
-            S.append((neighbour, [*path, neighbour]))
+        for neighbour in graph.adj[vertex]:
+            stack.append((neighbour, [*path, neighbour]))
     return []
 
 
-def BFS3(graph, node1):
-    visited, Q, pred = {node1}, deque([node1]), {}
-    while Q:
-        current_node = Q.popleft()
+def bfs3(graph, node1):
+    visited, queue, pred = {node1}, deque([node1]), {}
+    while queue:
+        current_node = queue.popleft()
         for neighbour in graph.adj[current_node]:
             if neighbour not in visited:
                 visited.add(neighbour)
-                Q.append(neighbour)
+                queue.append(neighbour)
                 pred[neighbour] = current_node
     return pred
 
 
-def DFS3(graph, node1):
-    visited, S, pred = {node1}, [node1], {}
-    while S:
-        current_node = S.pop()
+def dfs3(graph, node1):
+    visited, stack, pred = {node1}, [node1], {}
+    while stack:
+        current_node = stack.pop()
         for neighbour in graph.adj[current_node]:
             if neighbour not in visited:
                 visited.add(neighbour)
-                S.append(neighbour)
+                stack.append(neighbour)
                 pred[neighbour] = current_node
     return pred
 
 
-def has_cycle(G):
+def has_cycle(graph):
     visited = set()
-    for node in G.adj:
-        if node not in visited and has_cycle_helper(G, node, visited):
+    for node in graph.adj:
+        if node not in visited and has_cycle_helper(graph, node, visited):
             return True
     return False
 
 
-def has_cycle_helper(G, node, visited, parent=None):
+def has_cycle_helper(graph, node, visited, parent=None):
     visited.add(node)
-    for neighbour in G.adj[node]:
+    for neighbour in graph.adj[node]:
         if neighbour not in visited:
-            has_cycle_helper(G, neighbour, visited, node)
+            has_cycle_helper(graph, neighbour, visited, node)
         elif neighbour != parent:
             return True
     return False
 
 
-def is_connected(G):
+def is_connected(graph):
     # If the graph is empty, it is connected
-    if not G.adj:
+    if not graph.adj:
         return True
-    first_node = list(G.adj.keys())[0]
-    S, visited = [first_node], {first_node}
-    while S:
-        current_node = S.pop()
-        for neighbour in G.adj[current_node]:
+    first_node = list(graph.adj.keys())[0]
+    stack, visited = [first_node], {first_node}
+    while stack:
+        current_node = stack.pop()
+        for neighbour in graph.adj[current_node]:
             if neighbour not in visited:
                 visited.add(neighbour)
-                S.append(neighbour)
-    return len(visited) == len(G.adj)
+                stack.append(neighbour)
+    return len(visited) == len(graph.adj)
 
 
 def create_random_graph(i, j):
@@ -204,9 +206,9 @@ def create_random_graph(i, j):
     return graph
 
 
-def graph_copy(G):
-    graph_cp = Graph(G.number_of_nodes())
-    for n1 in G.adj.keys():
-        for n2 in G.adjacent_nodes(n1):
-            graph_cp.add_edge(n1, n2)
-    return graph_cp
+def copy_graph(graph):
+    graph_copy = Graph(graph.number_of_nodes())
+    for n1 in graph.adj.keys():
+        for n2 in graph.adjacent_nodes(n1):
+            graph_copy.add_edge(n1, n2)
+    return graph_copy

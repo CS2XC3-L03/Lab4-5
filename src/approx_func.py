@@ -1,57 +1,49 @@
-import graph
+from graph import copy_graph, is_vertex_cover
 import random
 
-# Approx1
-def approx1(G):
-    C = set()
-    G_cp = graph.graph_copy(G)
-    while (graph.is_vertex_cover(G, C) == False):
+
+def approx1(graph):
+    cover_set = set()
+    graph_copy = copy_graph(graph)
+    while is_vertex_cover(graph, cover_set) == False:
         max_len = -1
-        for node in G_cp.adj:
-            max_len = max(len(G_cp.adj[node]), max_len)
-        for node in G_cp.adj:
-            if len(G_cp.adj[node]) == max_len and node not in C:
+        for node in graph_copy.adj:
+            max_len = max(len(graph_copy.adj[node]), max_len)
+        for node in graph_copy.adj:
+            if len(graph_copy.adj[node]) == max_len and node not in cover_set:
                 v = node
-        C.add(v)
-        remove_node(G_cp, v)
-    return C
-    
-# Aprrox2
-def approx2(G):
-    C = set()
-    G_cp = graph.graph_copy(G)
-    while (graph.is_vertex_cover(G, C) == False):
-        v = random.choice(list(G_cp.adj.keys()))
-        C.add(v)
-    return C
-
-# Aprrox3
-def approx3(G):
-    C = set()
-    G_cp = graph.graph_copy(G)
-    while (graph.is_vertex_cover(G, C) == False):
-        u = random.choice(list(G_cp.adj.keys()))
-        while len(G_cp.adj[u]) == 0:
-            u = random.choice(list(G_cp.adj.keys()))
-        v = random.choice(G_cp.adj[u])
-
-        C.add(u), C.add(v)
-        remove_node(G_cp, u), remove_node(G_cp, v)
-    return C
-
-# Helper Function
-def remove_node(G, n):
-    G.adj.pop(n)
-    for node in G.adj.keys():
-        if n in G.adj[node]:
-            G.adj[node].remove(n)
+        cover_set.add(v)
+        remove_node(graph_copy, v)
+    return cover_set
 
 
-print("---------------test-----------------------")
+def approx2(graph):
+    cover_set = set()
+    graph_copy = copy_graph(graph)
+    while is_vertex_cover(graph, cover_set) == False:
+        v = random.choice(list(graph_copy.adj.keys()))
+        cover_set.add(v)
+    return cover_set
 
-gp = graph.create_random_graph(5, 5)
-print(approx1(gp))
 
-print(approx2(gp))
+def approx3(graph):
+    cover_set = set()
+    graph_copy = copy_graph(graph)
+    while is_vertex_cover(graph, cover_set) == False:
+        u = random.choice(list(graph_copy.adj.keys()))
+        while len(graph_copy.adj[u]) == 0:
+            u = random.choice(list(graph_copy.adj.keys()))
+        v = random.choice(graph_copy.adj[u])
 
-print(approx3(gp))
+        cover_set.add(u)
+        cover_set.add(v)
+        remove_node(graph_copy, u)
+        remove_node(graph_copy, v)
+    return cover_set
+
+
+def remove_node(graph, target_node):
+    graph.adj.pop(target_node)
+    for node in graph.adj.keys():
+        if target_node in graph.adj[node]:
+            graph.adj[node].remove(target_node)
