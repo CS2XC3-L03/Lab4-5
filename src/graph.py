@@ -92,9 +92,8 @@ def minimum_vertex_cover(graph):
     subsets = power_set(nodes)
     min_cover = nodes
     for subset in subsets:
-        if is_vertex_cover(graph, subset):
-            if len(subset) < len(min_cover):
-                min_cover = subset
+        if is_vertex_cover(graph, subset) and (len(subset) < len(min_cover)):
+            min_cover = subset
     return min_cover
 
 
